@@ -20,10 +20,7 @@ except serial.SerialException as e:
     print(f"Could not open CO2 serial port {CO2_SERIAL_PORT}: {e}")
     ser_co2 = None
 def read_co2_data():
-    """
-    Reads data from the CO2 sensor via UART.
-    Assumes a protocol like MH-Z19B.
-    """
+
     if ser_co2 is None:
         return None
     try:
@@ -39,15 +36,12 @@ def read_co2_data():
         print(f"Error reading CO2 data: {e}")
     return None
 def send_telemetry_data(client, co2_value):
-    """
-    Constructs and sends telemetry data to IoT Hub.
-    """
+
     try:
         if co2_value is None:
             print("No valid CO2 data to send.")
             return
-        # --- MODIFICATION ---: Added timestamp and deviceId to the payload.
-        # Get the current time in ISO 8601 UTC format, which is ideal for Azure.
+
         utc_timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         
         telemetry_data = {
@@ -66,9 +60,7 @@ def send_telemetry_data(client, co2_value):
     except Exception as e:
         print(f"Error sending message to IoT Hub: {e}")
 def main():
-    """
-    Main function to connect to IoT Hub and send data periodically.
-    """
+
     client = None
     try:
         client = IoTHubDeviceClient.create_from_connection_string(CONNECTION_STRING)
