@@ -5,7 +5,7 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 import time 
 
 #InfluxDB 設定
-INFLUXDB_URL = "http://100.64.1.112:8086"
+INFLUXDB_URL = "http://XXX.XXX.XXX.XXX:8086"
 INFLUXDB_TOKEN = "###" # あなたのAPIトークンをここに貼り付け
 INFLUXDB_ORG = "rin" # 組織名
 INFLUXDB_BUCKET = "sensor_data" #設定したバケット名
