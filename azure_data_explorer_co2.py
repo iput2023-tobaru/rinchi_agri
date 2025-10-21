@@ -2,6 +2,8 @@ import os
 import time
 import json
 import serial
+import datetime
+from zoneinfo import ZoneInfo
 from azure.iot.device import IoTHubDeviceClient, Message
 # --- Azure IoT Hub Settings ---
 
@@ -41,11 +43,13 @@ def send_telemetry_data(client, co2_value):
         if co2_value is None:
             print("No valid CO2 data to send.")
             return
-
-        utc_timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        
+        jst_now = datetime.now(ZoneInfo("Asia/Tokyo"))
+        jst_timestamp = jst_now.strftime("%Y-%m-%dT%H:%M:%S%:z")
+        #utc_timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         
         telemetry_data = {
-            "timestamp": utc_timestamp,
+            "timestamp": jst_timestamp,
             "deviceId": DEVICE_ID,
             "co2": co2_value
         }
